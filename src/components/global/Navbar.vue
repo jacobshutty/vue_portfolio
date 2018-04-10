@@ -1,15 +1,15 @@
 <template>
   <header>
     <nav id='header-nav'>
-      <div class="left">
+      <span class="left">
         Left
-      </div>
-      <div class="logo">
+      </span>
+      <span class="logo">
         Logo
-      </div>
-      <div class="right">
+      </span>
+      <span class="right">
         Right
-      </div>
+      </span>
     </nav>
   </header>
 </template>
@@ -23,12 +23,19 @@ export default {
 <style lang='scss' scoped>
 #header-nav {
   display: flex;
-  flex-direction: column;
-  background-color: $cta-color;
+  flex-direction: row;
+  background-color: $color-primary;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  box-sizing: border-box;
+  height: 60px;
   .left {
     justify-self: flex-start;
   }
   .logo {
+    justify-self: center;
   }
   .right {
     justify-self: flex-end;
