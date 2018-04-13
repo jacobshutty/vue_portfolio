@@ -5,20 +5,23 @@
       <div class="container">
         <div class="banner-header">
           <h1>Portfolio</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem perferendis iste est ex, ipsam quasi ea numquam at mollitia dolor?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
         </div>
       </div>
     </div>
+    <skill-grid></skill-grid>
   </div>
 </template>
 
 <script>
 import Navbar from './global/Navbar';
+import SkillGrid from './SkillGrid';
 
 export default {
   name: 'Home',
   components: {
     Navbar,
+    SkillGrid,
   },
 };
 </script>

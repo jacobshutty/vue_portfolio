@@ -5,16 +5,19 @@
   "author": "Jacob Shutty <jacobshutty@gmail.com>",
   "private": true,
   "scripts": {
-    "dev":
-      "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "node-sass": "^4.8.3",
+    "prismic-dom": "^2.1.0",
+    "prismic-javascript": "^1.5.0-beta.2",
     "sass-loader": "^6.0.7",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
@@ -67,5 +70,9 @@
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ]
 }

@@ -1,3 +1,4 @@
+// Colors
 $lavender: #a790a5;
 $tulip: #28112b;
 $wine: #2e0219;
@@ -7,7 +8,7 @@ $steel: #c1c1c1;
 $steel-dark: #2b2c28;
 $seafoam: #339989;
 $frost: #6c91c2;
-
+// Color theme
 $color-primary: $lavender;
 $color-accent: $sherbert;
 $color-background: $snow;
@@ -16,4 +17,11 @@ $color-text: $steel-dark;
 $color-text-weak: $steel;
 $color-text-strong: $seafoam;
 $color-text-heading: $tulip;
-$color-border: $wine;
+$color-border: $steel;
+// Fonts
+$font-primary: 'Montserrat', sans-serif;
+$font-secondary: 'IBM Plex Sans', sans-serif;
+$font-tertiary: 'Dosis', sans-serif;
+$font-small: 'Quicksand', sans-serif;
+// Borders
+$border-primary: 2px solid $color-border;
