@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  font-family: $font-primary;
+  .fullwidth {
+    width: 100%;
+  }
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .page-banner {
+    width: 100%;
+    margin: 0;
+    .banner-header {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .header {
+    font-size: 2em;
+    padding: 0.67em 0;
+    font-family: $font-primary;
+    color: $color-text-heading;
+  }
+}
