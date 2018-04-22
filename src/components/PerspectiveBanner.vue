@@ -101,7 +101,7 @@ export default {
   color: white;
   text-transform: uppercase;
   font-family: 'open sans';
-  background-image: url(./../assets/tree.png);
+  background-image: url(./../assets/tree.jpg);
   background-size: 110vw;
   background-position: 50% 40%;
   text-align: center;

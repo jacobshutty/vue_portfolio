@@ -25,3 +25,30 @@ $font-tertiary: 'Dosis', sans-serif;
 $font-small: 'Quicksand', sans-serif;
 // Borders
 $border-primary: 2px solid $color-border;
+// Media Queries
+$medium: 1240px;
+$small: 560px;
+
+@mixin under-m {
+  @media (max-width: $medium) {
+    @content;
+  }
+}
+
+@mixin under-s {
+  @media (max-width: $small) {
+    @content;
+  }
+}
+
+@mixin over-m {
+  @media (min-width: #{$medium + 1px}) {
+    @content;
+  }
+}
+
+@mixin over-s {
+  @media (min-width: #{$small + 1px}) {
+    @content;
+  }
+}

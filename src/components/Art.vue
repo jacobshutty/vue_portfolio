@@ -65,7 +65,6 @@ export default {
 <style lang='scss' scoped>
 .art {
   .art-section {
-    height: 1000px;
     .art-wrap {
       align-content: center;
       height: 200px;
@@ -94,6 +93,9 @@ export default {
       &.expanded {
         .expanded-wrap {
           display: flex;
+          @include under-m {
+            display: none;
+          }
         }
       }
       .art-img {
@@ -134,7 +136,10 @@ export default {
         align-items: center;
         justify-content: center;
         font-size: 2em;
-        color: $color-background-shade;
+        color: $color-background;
+        @include under-m {
+          display: none;
+        }
       }
       .dim {
         opacity: 0;
