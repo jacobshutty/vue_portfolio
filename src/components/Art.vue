@@ -65,6 +65,8 @@ export default {
 <style lang='scss' scoped>
 .art {
   .art-section {
+    border-top: 5px solid $color-text-strong;
+    border-bottom: 5px solid $color-text-strong;
     .art-wrap {
       align-content: center;
       height: 200px;

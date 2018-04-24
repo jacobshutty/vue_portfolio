@@ -8,7 +8,9 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import VueParticles from 'vue-particles';
+import VueClipboard from 'vue-clipboard2';
 
+Vue.use(VueClipboard);
 Vue.use(VueParticles);
 Vue.use(vueAxios, axios);
 Vue.use(Prismic);

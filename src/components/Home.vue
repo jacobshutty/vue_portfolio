@@ -5,6 +5,7 @@
     <perspective-banner></perspective-banner>
     <skill-grid></skill-grid>
     <art></art>
+    <contact></contact>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import SkillGrid from './SkillGrid';
 import PerspectiveBanner from './PerspectiveBanner';
 import Banner from './global/Banner';
 import Art from './Art';
+import Contact from './Contact';
 
 export default {
   name: 'Home',
@@ -23,6 +25,7 @@ export default {
     PerspectiveBanner,
     Banner,
     Art,
+    Contact,
   },
 };
 </script>

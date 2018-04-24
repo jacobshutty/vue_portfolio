@@ -1,7 +1,6 @@
 <template>
   <!-- TODO: Clear perspective on mouse leave -->
   <div class="rel">
-    <!-- <vue-particles color="#dedede"></vue-particles> -->
     <div class="js-perspective">
       <div class="perspective-card-wrap">
         <div class="js-perspective-card perspective-card">
@@ -63,6 +62,7 @@ export default {
 .rel {
   position: relative;
   height: 250px;
+  z-index: 99;
 }
 #particles-js {
   position: absolute;
