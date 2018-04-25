@@ -5,7 +5,7 @@
         <div class="header">Primary Skills</div>
         <div class="skill-grid">
           <vue-particles color="#f19c79" linesColor="#2e0219" :hoverEffect="false" :clickEffect="false" :linesDistance="200" :particleSize="5"></vue-particles>
-          <div v-for="skill in skills" class="skill-wrap" :class="{selected:skill==selectedInfo}" :key="skill.id" @mouseover="skillInfo(skill)">
+          <div v-for="skill in skills" class="skill-wrap" :class="{selected:skill==selectedInfo}" :key="skill.id" @click="skillInfo(skill)">
             <div class="logo">
               <img :src="skill.data.logo.url" :alt="skill.data.logo.alt">
             </div>
@@ -54,7 +54,7 @@ export default {
         })
         .then(response => {
           this.skills = response.results;
-          this.skillInfo(this.skills[0]);
+          // this.skillInfo(this.skills[0]);
         });
     },
     skillInfo(skill) {
@@ -80,6 +80,9 @@ export default {
 .info {
   padding: 20px 0;
   font-size: 1.25em;
+  .serialized {
+    height: 75px;
+  }
 }
 .desktop {
   @include under-m {
@@ -124,15 +127,20 @@ export default {
 }
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 80px);
+  grid-template-columns: repeat(auto-fill, 100px);
   grid-template-rows: auto;
-  grid-column-gap: 75px;
+  grid-column-gap: 50px;
   padding: 20px 0;
   #particles-js {
     width: 100%;
     position: absolute;
     left: 0;
     bottom: 0;
+    cursor: default;
+    z-index: 1;
+    @include under-m {
+      opacity: 0;
+    }
   }
   @include under-m {
     grid-column-gap: 50px;
@@ -144,9 +152,14 @@ export default {
     transition: filter 0.5s ease-out;
     text-align: center;
     cursor: pointer;
+    z-index: 10;
     @include under-m {
       // -webkit-filter: none;
       // filter: none;
+    }
+    &:hover {
+      -webkit-filter: none;
+      filter: none;
     }
     &:after {
       content: '';

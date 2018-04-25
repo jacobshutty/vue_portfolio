@@ -39,7 +39,9 @@ export default {
     pullData() {
       Prismic.getApi(this.endpoint, {})
         .then(api => {
-          return api.query(Prismic.Predicates.at('document.type', 'art'));
+          return api.query(Prismic.Predicates.at('document.type', 'art'), {
+            orderings: '[my.art.index]',
+          });
         })
         .then(response => {
           this.artwork = response.results;
@@ -94,7 +96,8 @@ export default {
       }
       &.expanded {
         .expanded-wrap {
-          display: flex;
+          visibility: visible;
+          opacity: 1;
           @include under-m {
             display: none;
           }
@@ -105,17 +108,19 @@ export default {
         display: block;
       }
       .expanded-wrap {
-        display: none;
+        display: flex;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0.4s ease-out, opacity 0.4s ease-out;
         position: fixed;
         width: 100%;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.55);
+        background-color: rgba(0, 0, 0, 0.8);
         top: 0;
         height: 100vh;
         z-index: 99;
-        padding: 20px;
         .serialized {
           background-color: $color-background;
           width: 50%;
