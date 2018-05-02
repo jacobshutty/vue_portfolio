@@ -3,7 +3,12 @@
     <div class="container">
       <div class="contact-wrap">
         <!-- TODO: Figure out why success and error won't work -->
-        <span v-clipboard:copy="email">jacobshutty[at]gmail.com</span>
+        <span v-clipboard:copy="email">jacobshutty@gmail.com</span>
+        <div @click='showResume' class="view-resume button">View Resume</div>
+        <div class="resume-wrap" v-show="resume">
+          <a href="static/Resume_Latest.pdf" download class="download">Download &dArr;</a>
+          <pdf src='static/Resume_Latest.pdf'></pdf>
+        </div>
       </div>
     </div>
   </div>
@@ -11,17 +16,23 @@
 </template>
 
 <script>
+import pdf from 'vue-pdf';
+
 export default {
-  components: {},
+  components: { pdf },
   data() {
     return {
       email: 'jacobshutty@gmail.com',
       copySuccess: null,
+      resume: false,
     };
   },
   methods: {
     copied(status) {
       this.copySuccess = status;
+    },
+    showResume() {
+      this.resume = true;
     },
   },
 };
@@ -35,6 +46,26 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    .resume-wrap {
+      width: 100%;
+      text-align: center;
+    }
+    .view-resume {
+      margin: 10px;
+      // &:hover {
+      //   &:after {
+      //     content: ' \2193';
+      //   }
+      //   &:before {
+      //     content: '\2193 ';
+      //   }
+      // }
+    }
+    .download {
+      display: inline-block;
+      color: $color-text-strong;
+    }
     span {
       text-decoration: none;
       color: $color-text-heading;
