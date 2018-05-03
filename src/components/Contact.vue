@@ -4,10 +4,15 @@
       <div class="contact-wrap">
         <!-- TODO: Figure out why success and error won't work -->
         <span v-clipboard:copy="email">jacobshutty@gmail.com</span>
-        <div @click='showResume' class="view-resume button">View Resume</div>
-        <div class="resume-wrap" v-show="resume">
-          <a href="static/Resume_Latest.pdf" download class="download">Download &dArr;</a>
-          <pdf src='static/Resume_Latest.pdf'></pdf>
+        <div class="desktop">
+          <div @click='showResume' class="view-resume button">View Resume</div>
+          <div class="resume-wrap" v-show="resume">
+            <a href="static/Resume_Latest.pdf" download class="download">Download &dArr;</a>
+            <pdf src='static/Resume_Latest.pdf'></pdf>
+          </div>
+        </div>
+        <div class="mobile">
+          <a class="view-resume button" href="static/Resume_Latest.pdf">View Resume</a>
         </div>
       </div>
     </div>
@@ -47,12 +52,19 @@ export default {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    .resume-wrap {
+    .resume-wrap,
+    .desktop {
       width: 100%;
       text-align: center;
     }
+    .mobile {
+      a.view-resume {
+        text-decoration: none;
+      }
+    }
     .view-resume {
       margin: 10px;
+      display: inline-block;
       // &:hover {
       //   &:after {
       //     content: ' \2193';

@@ -34,4 +34,14 @@ body {
       background-color: darken($color-accent, 20%);
     }
   }
+  .desktop {
+    @include under-s {
+      display: none;
+    }
+  }
+  .mobile {
+    @include over-s {
+      display: none;
+    }
+  }
 }

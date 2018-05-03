@@ -9,7 +9,9 @@ import App from './App';
 import router from './router';
 import VueParticles from 'vue-particles';
 import VueClipboard from 'vue-clipboard2';
+import VueLazyLoad from 'vue-lazyload';
 
+Vue.use(VueLazyLoad);
 Vue.use(VueClipboard);
 Vue.use(VueParticles);
 Vue.use(vueAxios, axios);

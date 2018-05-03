@@ -7,7 +7,7 @@
       <div class="art-section">
         <div v-for="art in artwork" class="art-wrap" :class="{open: art==hoveredItem, closed: art!=hoveredItem, expanded: art==expandedItem}" :key="art.id" @mouseover="hovered(art)" :style="{backgroundImage: 'url(' + art.data.art_image.url + ')'}" @click="expand(art)">
           <div class="expanded-wrap">
-            <img :src="art.data.art_image.url" class="expanded-img">
+            <img v-lazy="art.data.art_image.url" class="expanded-img">
             <serializer :content='art.data.info'></serializer>
           </div>
           <span class="dim"></span>
