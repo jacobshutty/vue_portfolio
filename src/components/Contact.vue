@@ -5,14 +5,15 @@
         <!-- TODO: Figure out why success and error won't work -->
         <span v-clipboard:copy="email">jacobshutty@gmail.com</span>
         <div class="desktop">
-          <div @click='showResume' class="view-resume button">View Resume</div>
+          <div @click='showResume' class="view-resume button" v-if="!resume">View Resume</div>
+          <div @click='hideResume' class="hide-resume button" v-else>Hide</div>
           <div class="resume-wrap" v-show="resume">
-            <a href="static/Resume_Latest.pdf" download class="download">Download &dArr;</a>
-            <pdf src='static/Resume_Latest.pdf'></pdf>
+            <a href="static/JacobShuttyResume.pdf" download class="download">Download &dArr;</a>
+            <pdf src='static/JacobShuttyResume.pdf'></pdf>
           </div>
         </div>
         <div class="mobile">
-          <a class="view-resume button" href="static/Resume_Latest.pdf">View Resume</a>
+          <a class="view-resume button" href="static/JacobShuttyResume.pdf">View Resume</a>
         </div>
       </div>
     </div>
@@ -39,6 +40,9 @@ export default {
     showResume() {
       this.resume = true;
     },
+    hideResume() {
+      this.resume = false;
+    },
   },
 };
 </script>
@@ -62,9 +66,11 @@ export default {
         text-decoration: none;
       }
     }
-    .view-resume {
+    .view-resume,
+    .hide-resume {
       margin: 10px;
       display: inline-block;
+      width: 120px;
       // &:hover {
       //   &:after {
       //     content: ' \2193';
@@ -73,6 +79,9 @@ export default {
       //     content: '\2193 ';
       //   }
       // }
+    }
+    .hide-resume {
+      background-color: red;
     }
     .download {
       display: inline-block;
