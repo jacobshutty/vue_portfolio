@@ -5,10 +5,18 @@
     </div>
     <div class="fullwidth">
       <div class="art-section">
-        <div v-for="art in artwork" class="art-wrap" :class="{open: art==hoveredItem, closed: art!=hoveredItem, expanded: art==expandedItem}" :key="art.id" @mouseover="hovered(art)" :style="{backgroundImage: 'url(' + art.data.art_image.url + ')'}" @click="expand(art)">
+        <div
+          v-for="art in artwork"
+          class="art-wrap"
+          :class="{open: art==hoveredItem, closed: art!=hoveredItem, expanded: art==expandedItem}"
+          :key="art.id"
+          @mouseover="hovered(art)"
+          :style="{backgroundImage: 'url(' + art.data.art_image.url + ')'}"
+          @click="expand(art)"
+        >
           <div class="expanded-wrap">
             <img v-lazy="art.data.art_image.url" class="expanded-img">
-            <serializer :content='art.data.info'></serializer>
+            <serializer :content="art.data.info"></serializer>
           </div>
           <span class="dim"></span>
           <span class="plus">+</span>
@@ -16,12 +24,11 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import Prismic from 'prismic-javascript';
-import Serializer from './global/Serializer';
+import Prismic from "prismic-javascript";
+import Serializer from "./global/Serializer";
 
 export default {
   components: {
@@ -29,7 +36,7 @@ export default {
   },
   data() {
     return {
-      endpoint: 'https://shuttyja-portfolio.cdn.prismic.io/api/v2',
+      endpoint: "https://shuttyja-portfolio.cdn.prismic.io/api/v2",
       artwork: null,
       hoveredItem: null,
       expandedItem: null,
@@ -39,8 +46,8 @@ export default {
     pullData() {
       Prismic.getApi(this.endpoint, {})
         .then(api => {
-          return api.query(Prismic.Predicates.at('document.type', 'art'), {
-            orderings: '[my.art.index]',
+          return api.query(Prismic.Predicates.at("document.type", "art"), {
+            orderings: "[my.art.index]",
           });
         })
         .then(response => {

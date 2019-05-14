@@ -45,3 +45,29 @@ body {
     }
   }
 }
+
+.slideDown-enter-active {
+  transition: all 0.2s;
+}
+.slideDown-leave-active {
+  transform: translateY(-20px);
+  transition: all 0.2s;
+}
+.slideDown-enter,
+.slideDown-leave-to {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.slideDownLong-enter-active {
+  transition: all 0.2s;
+}
+.slideDownLong-leave-active {
+  transform: translateY(-50px);
+  transition: all 0.2s;
+}
+.slideDownLong-enter,
+.slideDownLong-leave-to {
+  transform: translateY(-50px);
+  opacity: 0;
+}

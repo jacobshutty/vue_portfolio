@@ -1,36 +1,66 @@
 <template>
   <div class="skills">
-    <div class="fullwidth">
+    <div
+      v-if="shownParticles"
+      class="fullwidth"
+      :style="{backgroundColor: shownParticles.bgColor, color: shownParticles.textColor}"
+    >
       <div class="container">
-        <div class="header">Primary Skills</div>
-        <div class="skill-grid">
-          <vue-particles color="#f19c79" linesColor="#2e0219" :hoverEffect="false" :clickEffect="false" :linesDistance="200" :particleSize="5"></vue-particles>
-          <div v-for="skill in skills" class="skill-wrap" :class="{selected:skill==selectedInfo}" :key="skill.id" @click="skillInfo(skill)">
-            <div class="logo">
-              <img :src="skill.data.logo.url" :alt="skill.data.logo.alt">
+        <div class="header" :style="{color: shownParticles.textColor}">Primary Skills</div>
+        <transition name="slideDownLong">
+          <div
+            @click="particleColors()"
+            class="color-switcher"
+            :style="{backgroundColor: shownParticles.textColor, color: shownParticles.bgColor}"
+          >
+            <i class="fas fa-palette"></i>
+          </div>
+        </transition>
+        <div class="particles-wrap" v-for="particles in colorData" :key="particles.name">
+          <div class="skill-grid" v-if="shownParticles.name === particles.name">
+            <vue-particles
+              :color="particles.dotColor"
+              :linesColor="particles.lineColor"
+              :hoverEffect="false"
+              :clickEffect="false"
+              :linesDistance="200"
+              :particleSize="5"
+            ></vue-particles>
+            <div
+              v-for="skill in skills"
+              class="skill-wrap"
+              :class="{selected:skill==selectedInfo}"
+              :key="skill.id"
+              @click="skillInfo(skill)"
+            >
+              <div class="logo">
+                <img :src="skill.data.logo.url" :alt="skill.data.logo.alt">
+              </div>
+              <div class="title">{{skill.data.skill_name[0].text}}</div>
             </div>
-            <div class="title">{{skill.data.skill_name[0].text}}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="info-pop" v-if="showInfo">
-      <span class="close-pop" @click='clearSkill'>&times;</span>
+      <span class="close-pop" @click="clearSkill">&times;</span>
       <img :src="selectedInfo.data.logo.url" :alt="selectedInfo.data.logo.alt">
-      <serializer :content='selectedInfo.data.skill_info'></serializer>
+      <serializer :content="selectedInfo.data.skill_info"></serializer>
     </div>
     <div class="desktop container">
-      <div class="info" v-if="showInfo">
-        <serializer :content='selectedInfo.data.skill_info'></serializer>
-      </div>
+      <transition name="slideDown">
+        <div class="info" v-if="showInfo">
+          <serializer :content="selectedInfo.data.skill_info"></serializer>
+        </div>
+      </transition>
     </div>
   </div>
-
 </template>
 
 <script>
-import Prismic from 'prismic-javascript';
-import Serializer from './global/Serializer';
+import Prismic from "prismic-javascript";
+import Serializer from "./global/Serializer";
+import { particleColorTransform } from "@/transforms";
 
 export default {
   components: {
@@ -38,34 +68,64 @@ export default {
   },
   data() {
     return {
-      endpoint: 'https://shuttyja-portfolio.cdn.prismic.io/api/v2',
+      endpoint: "https://shuttyja-portfolio.cdn.prismic.io/api/v2",
       skills: null,
       showInfo: false,
       selectedInfo: null,
+      showParticles: false,
+      shownParticles: null,
+      colorData: null,
+      particleBg: "#c1c1c1",
+      particleLineColor: "#2e0219",
+      particleDotColor: "#f19c79",
+      skillTextColor: "#2b2c28",
     };
   },
   methods: {
     pullData() {
       Prismic.getApi(this.endpoint, {})
         .then(api => {
-          return api.query(Prismic.Predicates.at('document.type', 'skill'), {
-            orderings: '[my.skill.index]',
+          return api.query(Prismic.Predicates.at("document.type", "skill"), {
+            orderings: "[my.skill.index]",
           });
         })
         .then(response => {
           this.skills = response.results;
           // this.skillInfo(this.skills[0]);
         });
+      Prismic.getApi(this.endpoint, {})
+        .then(api => {
+          return api.query(Prismic.Predicates.at("document.type", "particle_colors"), {});
+        })
+        .then(response => {
+          this.colorData = particleColorTransform(response);
+          this.particleColors();
+        });
     },
     skillInfo(skill) {
-      this.showInfo = true;
-      this.selectedInfo = skill;
+      if (this.selectedInfo === skill) {
+        this.showInfo = false;
+        this.selectedInfo = null;
+      } else {
+        this.showInfo = true;
+        this.selectedInfo = skill;
+      }
     },
     clearSkill() {
       this.showInfo = false;
     },
+    particleColors() {
+      let filteredColors = this.colorData;
+      if (this.shownParticles) {
+        // If there are already particles shown, filter them out so you don't get the same one.
+        const previousParticles = this.shownParticles;
+        filteredColors = this.colorData.filter(color => color.name !== previousParticles.name);
+      }
+      const colorIndex = Math.floor(Math.random() * Math.floor(filteredColors.length));
+      this.shownParticles = filteredColors[colorIndex];
+      this.showParticles = true;
+    },
   },
-  computed: {},
   created() {
     this.pullData();
   },
@@ -73,9 +133,23 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.fullwidth {
-  background-color: $color-background-shade;
+.container {
   position: relative;
+}
+.fullwidth {
+  position: relative;
+  .header {
+    z-index: 5;
+  }
+  .color-switcher {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 5vw;
+    padding: 20px;
+    border-radius: 0 0 10px 10px;
+    z-index: 99;
+  }
 }
 .info {
   padding: 20px 0;
@@ -122,12 +196,9 @@ export default {
 .skills {
   border-top: 5px solid $color-text-strong;
 }
-.header {
-  z-index: 5;
-}
 .skill-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 100px);
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   grid-template-rows: auto;
   grid-column-gap: 50px;
   padding: 20px 0;
@@ -149,7 +220,7 @@ export default {
   .skill-wrap {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
-    transition: filter 0.5s ease-out;
+    transition: filter 0.25s ease-out;
     text-align: center;
     cursor: pointer;
     z-index: 10;
@@ -162,7 +233,7 @@ export default {
       filter: none;
     }
     &:after {
-      content: '';
+      content: "";
       width: 0;
       height: 0;
       border-style: solid;
@@ -176,7 +247,7 @@ export default {
       -webkit-filter: none;
       filter: none;
       &:after {
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         border-style: solid;

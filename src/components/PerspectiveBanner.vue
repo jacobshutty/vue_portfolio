@@ -21,7 +21,7 @@ export default {
   methods: {
     perspectiveHover(el, intensity) {
       var self = this,
-        parent = document.querySelector('.rel');
+        parent = document.querySelector(".rel");
 
       this.perspective = function(e, el) {
         var elX = el.offsetLeft,
@@ -32,20 +32,14 @@ export default {
         var mouseX = e.pageX,
           mouseY = e.pageY;
 
-        var rotateY = -(
-            (elWidth / 2 - (mouseX - elX)) /
-            (elWidth / 2) *
-            intensity
-          ),
-          rotateX =
-            (elHeight / 2 - (mouseY - elY)) / (elHeight / 2) * intensity;
+        var rotateY = -(((elWidth / 2 - (mouseX - elX)) / (elWidth / 2)) * intensity),
+          rotateX = ((elHeight / 2 - (mouseY - elY)) / (elHeight / 2)) * intensity;
 
-        el.style.transform =
-          'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+        el.style.transform = "rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg)";
       };
 
-      parent.addEventListener('mousemove', function(e) {
-        if (e.target.classList.contains('js-perspective-card')) {
+      parent.addEventListener("mousemove", function(e) {
+        if (e.target.classList.contains("js-perspective-card")) {
           self.perspective(e, e.target);
         }
       });
@@ -53,7 +47,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.perspectiveHover('.js-perspective-card', 2);
+    this.perspectiveHover(".js-perspective-card", 2);
   },
 };
 </script>
@@ -84,6 +78,7 @@ export default {
   display: inline-block;
 }
 .perspective-card__content {
+  pointer-events: none;
   position: absolute;
   top: 50%;
   left: 0;
@@ -100,7 +95,7 @@ export default {
   height: 500px;
   color: white;
   text-transform: uppercase;
-  font-family: 'open sans';
+  font-family: "open sans";
   background-image: url(./../assets/tree.jpg);
   background-size: 110vw;
   background-position: 50% 40%;

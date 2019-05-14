@@ -10,15 +10,15 @@
 </template>
 
 <script>
-import Navbar from './global/Navbar';
-import SkillGrid from './SkillGrid';
-import PerspectiveBanner from './PerspectiveBanner';
-import Banner from './global/Banner';
-import Art from './Art';
-import Contact from './Contact';
+import Navbar from "./global/Navbar";
+import SkillGrid from "./SkillGrid";
+import PerspectiveBanner from "./PerspectiveBanner";
+import Banner from "./global/Banner";
+import Art from "./Art";
+import Contact from "./Contact";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Navbar,
     SkillGrid,
@@ -31,5 +31,4 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
 </style>
