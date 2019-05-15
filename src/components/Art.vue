@@ -11,12 +11,12 @@
           :class="{open: art==hoveredItem, closed: art!=hoveredItem, expanded: art==expandedItem}"
           :key="art.id"
           @mouseover="hovered(art)"
-          :style="{backgroundImage: 'url(' + art.data.art_image.url + ')'}"
+          :style="{backgroundImage: 'url(' + art.imageUrl + ')'}"
           @click="expand(art)"
         >
           <div class="expanded-wrap">
-            <img v-lazy="art.data.art_image.url" class="expanded-img">
-            <serializer :content="art.data.info"></serializer>
+            <img v-lazy="art.imageUrl" class="expanded-img">
+            <span v-html="art.info"></span>
           </div>
           <span class="dim"></span>
           <span class="plus">+</span>
@@ -27,33 +27,17 @@
 </template>
 
 <script>
-import Prismic from "prismic-javascript";
-import Serializer from "./global/Serializer";
+import { getArtwork } from "@/api/prismic";
 
 export default {
-  components: {
-    Serializer,
-  },
   data() {
     return {
-      endpoint: "https://shuttyja-portfolio.cdn.prismic.io/api/v2",
       artwork: null,
       hoveredItem: null,
       expandedItem: null,
     };
   },
   methods: {
-    pullData() {
-      Prismic.getApi(this.endpoint, {})
-        .then(api => {
-          return api.query(Prismic.Predicates.at("document.type", "art"), {
-            orderings: "[my.art.index]",
-          });
-        })
-        .then(response => {
-          this.artwork = response.results;
-        });
-    },
     hovered(art) {
       this.hoveredItem = art;
     },
@@ -66,7 +50,7 @@ export default {
     },
   },
   mounted() {
-    this.pullData();
+    getArtwork().then(response => (this.artwork = response));
   },
 };
 </script>
@@ -128,7 +112,7 @@ export default {
         top: 0;
         height: 100vh;
         z-index: 99;
-        .serialized {
+        span {
           background-color: $color-background;
           width: 50%;
           text-align: center;

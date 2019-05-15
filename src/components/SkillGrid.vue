@@ -30,13 +30,13 @@
               v-for="skill in skills"
               class="skill-wrap"
               :class="{selected:skill==selectedInfo}"
-              :key="skill.id"
+              :key="skill.name"
               @click="skillInfo(skill)"
             >
               <div class="logo">
-                <img :src="skill.data.logo.url" :alt="skill.data.logo.alt">
+                <img :src="skill.logoUrl">
               </div>
-              <div class="title">{{skill.data.skill_name[0].text}}</div>
+              <div class="title">{{skill.name}}</div>
             </div>
           </div>
         </div>
@@ -44,13 +44,13 @@
     </div>
     <div class="info-pop" v-if="showInfo">
       <span class="close-pop" @click="clearSkill">&times;</span>
-      <img :src="selectedInfo.data.logo.url" :alt="selectedInfo.data.logo.alt">
-      <serializer :content="selectedInfo.data.skill_info"></serializer>
+      <img :src="selectedInfo.logoUrl">
+      <span v-html="selectedInfo.info"></span>
     </div>
     <div class="desktop container">
       <transition name="slideDown">
         <div class="info" v-if="showInfo">
-          <serializer :content="selectedInfo.data.skill_info"></serializer>
+          <span v-html="selectedInfo.info"></span>
         </div>
       </transition>
     </div>
@@ -59,13 +59,9 @@
 
 <script>
 import Prismic from "prismic-javascript";
-import Serializer from "./global/Serializer";
-import { particleColorTransform } from "@/transforms";
+import { getSkills, getParticles } from "@/api/prismic";
 
 export default {
-  components: {
-    Serializer,
-  },
   data() {
     return {
       endpoint: "https://shuttyja-portfolio.cdn.prismic.io/api/v2",
@@ -81,27 +77,17 @@ export default {
       skillTextColor: "#2b2c28",
     };
   },
+  created() {
+    getSkills().then(response => {
+      this.skills = response;
+    });
+
+    getParticles().then(response => {
+      this.colorData = response;
+      this.particleColors();
+    });
+  },
   methods: {
-    pullData() {
-      Prismic.getApi(this.endpoint, {})
-        .then(api => {
-          return api.query(Prismic.Predicates.at("document.type", "skill"), {
-            orderings: "[my.skill.index]",
-          });
-        })
-        .then(response => {
-          this.skills = response.results;
-          // this.skillInfo(this.skills[0]);
-        });
-      Prismic.getApi(this.endpoint, {})
-        .then(api => {
-          return api.query(Prismic.Predicates.at("document.type", "particle_colors"), {});
-        })
-        .then(response => {
-          this.colorData = particleColorTransform(response);
-          this.particleColors();
-        });
-    },
     skillInfo(skill) {
       if (this.selectedInfo === skill) {
         this.showInfo = false;
@@ -125,9 +111,6 @@ export default {
       this.shownParticles = filteredColors[colorIndex];
       this.showParticles = true;
     },
-  },
-  created() {
-    this.pullData();
   },
 };
 </script>
@@ -207,11 +190,9 @@ export default {
     position: absolute;
     left: 0;
     bottom: 0;
+    top: 0;
     cursor: default;
     z-index: 1;
-    @include under-m {
-      opacity: 0;
-    }
   }
   @include under-m {
     grid-column-gap: 50px;

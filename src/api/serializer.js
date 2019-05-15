@@ -1,20 +1,16 @@
-<template>
-  <div class="serialized">
-    <span v-html="serializedContent"></span>
-  </div>
-</template>
-
-<script>
 import PrismicRichText from "prismic-richtext";
 
-var PrismicDOM = require("prismic-dom");
-var Elements = PrismicDOM.RichText.Elements;
-var linkResolver = function(doc) {
-  // Pretty URLs for known types
-  // Fallback for other types, in case new custom types get created
+import PrismicDOM from "prismic-dom";
+const Elements = PrismicDOM.RichText.Elements;
+const linkResolver = function(doc) {
   return "/doc/" + doc.id;
 };
-var htmlSerializer = function(element, content, children) {
+
+export default function serialize(content) {
+  return PrismicDOM.RichText.asHtml(content, linkResolver, htmlSerializer);
+}
+
+function htmlSerializer(element, content, children) {
   switch (element.type) {
     case Elements.heading1:
       return `<h1>${children.join("")}</h1>`;
@@ -56,19 +52,19 @@ var htmlSerializer = function(element, content, children) {
       var img = `<img src="${element.url}" alt="${element.alt ||
         ""}" copyright="${element.copyright || ""}">`;
       return `
-        <p class="${wrapperClassList.join(" ")}">
-          ${linkUrl ? `<a ${linkTarget} href="${linkUrl}">${img}</a>` : img}
-        </p>
-      `;
+          <p class="${wrapperClassList.join(" ")}">
+            ${linkUrl ? `<a ${linkTarget} href="${linkUrl}">${img}</a>` : img}
+          </p>
+        `;
     case Elements.embed:
       return `
-        <div data-oembed="${element.oembed.embed_url}"
-          data-oembed-type="${element.oembed.type}"
-          data-oembed-provider="${element.oembed.provider_name}"
-        >
-          ${element.oembed.html}
-        </div>
-      `;
+          <div data-oembed="${element.oembed.embed_url}"
+            data-oembed-type="${element.oembed.type}"
+            data-oembed-provider="${element.oembed.provider_name}"
+          >
+            ${element.oembed.html}
+          </div>
+        `;
     case Elements.hyperlink:
       var target = element.data.target ? `target="${element.data.target}" rel="noopener"` : "";
       var linkUrl = PrismicDOM.Link.url(element.data, module.exports.linkResolver);
@@ -81,38 +77,4 @@ var htmlSerializer = function(element, content, children) {
     default:
       return null;
   }
-};
-
-export default {
-  components: {
-    PrismicRichText,
-  },
-  props: ["content"],
-  name: "Serializer",
-  data() {
-    return {
-      serializedContent: null,
-    };
-  },
-  methods: {
-    serialize() {
-      this.serializedContent = PrismicDOM.RichText.asHtml(
-        this.content,
-        linkResolver,
-        htmlSerializer
-      );
-    },
-  },
-  created() {
-    this.serialize();
-  },
-  watch: {
-    content: function() {
-      this.serialize();
-    },
-  },
-};
-</script>
-
-<style scoped>
-</style>
+}

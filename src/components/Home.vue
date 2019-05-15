@@ -4,6 +4,7 @@
     <!-- <banner></banner> -->
     <perspective-banner></perspective-banner>
     <skill-grid></skill-grid>
+    <work></work>
     <art></art>
     <contact></contact>
   </div>
@@ -16,6 +17,7 @@ import PerspectiveBanner from "./PerspectiveBanner";
 import Banner from "./global/Banner";
 import Art from "./Art";
 import Contact from "./Contact";
+import Work from "./Work";
 
 export default {
   name: "Home",
@@ -26,6 +28,7 @@ export default {
     Banner,
     Art,
     Contact,
+    Work,
   },
 };
 </script>

@@ -5,7 +5,6 @@ $wine: #2e0219;
 $sherbert: #f19c79;
 $snow: #fff;
 $steel: #dfdfdf;
-// $steel: #313131;
 $steel-dark: #2b2c28;
 $seafoam: #339989;
 $frost: #6c91c2;
@@ -28,10 +27,17 @@ $font-small: "Quicksand", sans-serif;
 $border-primary: 2px solid $color-border;
 // Media Queries
 $medium: 1240px;
+$medium-small: 1000px;
 $small: 560px;
 
 @mixin under-m {
   @media (max-width: $medium) {
+    @content;
+  }
+}
+
+@mixin under-ms {
+  @media (max-width: $medium-small) {
     @content;
   }
 }
@@ -44,6 +50,12 @@ $small: 560px;
 
 @mixin over-m {
   @media (min-width: #{$medium + 1px}) {
+    @content;
+  }
+}
+
+@mixin over-ms {
+  @media (min-width: #{$medium-small + 1px}) {
     @content;
   }
 }
