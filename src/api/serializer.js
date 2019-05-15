@@ -3,6 +3,7 @@ import PrismicRichText from "prismic-richtext";
 import PrismicDOM from "prismic-dom";
 const Elements = PrismicDOM.RichText.Elements;
 const linkResolver = function(doc) {
+  if (doc.type === "web") return doc.url;
   return "/doc/" + doc.id;
 };
 

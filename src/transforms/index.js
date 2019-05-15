@@ -18,6 +18,7 @@ export function particleColorTransform(data) {
       dotColor: color.dot_color,
       lineColor: color.line_color,
       textColor: color.text_color,
+      order: color.order,
     };
   });
 }
@@ -32,7 +33,6 @@ export function artworkTransform(data) {
 }
 
 export function workTransform(data) {
-  console.log("data", data);
   return data.results[0].data.body[0].items.map(function(item) {
     return {
       imageUrl: item.image.url,

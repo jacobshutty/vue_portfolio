@@ -99,16 +99,19 @@ export default {
     },
     clearSkill() {
       this.showInfo = false;
+      this.selectedInfo = null;
     },
     particleColors() {
-      let filteredColors = this.colorData;
       if (this.shownParticles) {
-        // If there are already particles shown, filter them out so you don't get the same one.
-        const previousParticles = this.shownParticles;
-        filteredColors = this.colorData.filter(color => color.name !== previousParticles.name);
+        const currentIndex = this.shownParticles.order - 1;
+        if (currentIndex + 1 <= this.colorData.length - 1) {
+          this.shownParticles = this.colorData[currentIndex + 1];
+        } else {
+          this.shownParticles = this.colorData[0];
+        }
+      } else {
+        this.shownParticles = this.colorData[0];
       }
-      const colorIndex = Math.floor(Math.random() * Math.floor(filteredColors.length));
-      this.shownParticles = filteredColors[colorIndex];
       this.showParticles = true;
     },
   },
@@ -147,35 +150,6 @@ export default {
   }
 }
 
-.info-pop {
-  width: 100%;
-  height: 100vh;
-  box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  color: $color-background;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.9);
-  z-index: 9999;
-  padding: 0 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  @include over-m {
-    display: none;
-  }
-  .close-pop {
-    position: absolute;
-    top: 0px;
-    right: 25px;
-    font-size: 5em;
-  }
-  img {
-    width: 50%;
-    max-width: 300px;
-  }
-}
 .skills {
   border-top: 5px solid $color-text-strong;
 }
@@ -205,9 +179,9 @@ export default {
     text-align: center;
     cursor: pointer;
     z-index: 10;
-    @include under-m {
-      // -webkit-filter: none;
-      // filter: none;
+    @include under-ms {
+      -webkit-filter: none;
+      filter: none;
     }
     &:hover {
       -webkit-filter: none;
