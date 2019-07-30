@@ -5,13 +5,13 @@
       <div class="work-wrap">
         <div v-for="item in work" :key="item.name" @click="workInfo(item)" class="work-item">
           <h3>{{item.name}}</h3>
-          <img :src="item.imageUrl" class="work-image">
+          <img :src="item.imageUrl" class="work-image" />
         </div>
       </div>
     </div>
     <div class="info-pop work-info-pop" v-if="showInfo">
       <span class="close-pop" @click="clearWork">&times;</span>
-      <img :src="selectedInfo.imageUrl">
+      <img :src="selectedInfo.imageUrl" />
       <span v-html="selectedInfo.description"></span>
     </div>
   </div>
@@ -55,6 +55,10 @@ export default {
       img {
         width: 100%;
         max-width: 500px;
+        @include over-s {
+          width: 500px;
+          max-width: unset;
+        }
       }
     }
   }

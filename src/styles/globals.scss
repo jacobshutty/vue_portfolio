@@ -100,5 +100,9 @@ body {
   img {
     width: 50%;
     max-width: 300px;
+    @include over-s {
+      width: 500px;
+      max-width: unset;
+    }
   }
 }
