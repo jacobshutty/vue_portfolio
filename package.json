@@ -21,7 +21,7 @@
     "vue-axios": "^2.1.1",
     "vue-clipboard2": "^0.1.0",
     "vue-particles": "^1.0.9",
-    "vue-pdf": "^3.3.1",
+    "vue-pdf": "^4.2.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
